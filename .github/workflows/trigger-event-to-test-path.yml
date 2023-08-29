@@ -1,0 +1,22 @@
+name: dispatch event to test-path
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  trigger-action-in-test-repo:
+    name: 發送事件 test-repo-event 到 sexyoung/test-path
+    runs-on: ubuntu-latest
+    steps:
+      - name: 發送事件
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT }}
+          repository: sexyoung/test-path
+          event-type: test-repo-event-C  # This should match the event type defined in repoA workflow
+
